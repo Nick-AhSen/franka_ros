@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+
+  <!-- Initialize gripper_center properties -->
+  <xacro:arg name="gripper_center" default="false" />
+  <xacro:property name="gripper_center" value="$(arg gripper_center)"/>
+  <xacro:arg name="gripper_center_xyz" default="0.0 0.0 0.10" />
+  <xacro:property name="gripper_center_xyz" value="$(arg gripper_center_xyz)"/>
+
+  <xacro:include filename="$(find franka_description)/robots/gzplugin_grasp_fix.xacro"/>
+  <xacro:include filename="$(find franka_description)/robots/panda.transmission.xacro"/>
+
+  <!-- Include xacro files -->
   <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
   <xacro:include filename="$(find franka_description)/robots/hand.xacro"/>
 
@@ -9,10 +20,12 @@
   <!-- end for simulation -->
 
   <xacro:panda_arm xyz="0 0 0" rpy="0 0 0" connected_to="world" arm_id="panda"/>
-  <xacro:hand ns="panda" rpy="0 0 ${-pi/4}" connected_to="panda_link8" safety_distance="0.03"/>
+  <xacro:hand ns="panda" rpy="0 0 ${-pi/4}" connected_to="panda_link8" safety_distance="0.03" gripper_center="${gripper_center}" gripper_center_xyz="${gripper_center_xyz}"/>
+  
 
   <!-- for simulation -->
   <xacro:panda_gazebo arm_id="panda"/>
   <xacro:panda_control arm_id="panda" load_hand="true" />
+  <xacro:gzplugin_grasp_fix robot_name="panda"/>
   <!-- end for simulation -->
 </robot>
