@@ -24,8 +24,9 @@
   
 
   <!-- for simulation -->
-  <xacro:panda_gazebo arm_id="panda"/>
+  <xacro:panda_gazebo robot_name="panda"/>
   <xacro:panda_control arm_id="panda" load_hand="true" />
+  <!-- <xacro:panda_transmission arm_id="panda" load_hand="true" /> -->
   <xacro:gzplugin_grasp_fix robot_name="panda"/>
   <!-- end for simulation -->
 </robot>
